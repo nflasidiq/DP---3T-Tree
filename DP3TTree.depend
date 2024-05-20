@@ -1,0 +1,43 @@
+# depslib dependency file v1.0
+1716201902 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\body.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"header.h"
+	"ridho.h"
+
+1715656434 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\header.h
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<time.h>
+	<stdbool.h>
+
+1715660297 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\ridho.h
+	<stdio.h>
+	<stdlib.h>
+
+1716211179 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\treeuser.c
+	<stdio.h>
+	<conio.h>
+	<stdlib.h>
+	<string.h>
+	"treeUser.h"
+	"header.h"
+
+1716200858 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\main.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<time.h>
+	<stdbool.h>
+	"header.h"
+	"ridho.h"
+
+1716205626 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\treeuser.h
+	<stdio.h>
+	<stdlib.h>
+
