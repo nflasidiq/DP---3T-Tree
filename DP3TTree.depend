@@ -19,12 +19,13 @@
 	<stdio.h>
 	<stdlib.h>
 
-1716211179 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\treeuser.c
+1716261701 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\treeuser.c
 	<stdio.h>
 	<conio.h>
 	<stdlib.h>
 	<string.h>
 	"treeUser.h"
+	"queue.h"
 	"header.h"
 
 1716200858 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\main.c
@@ -37,7 +38,18 @@
 	"header.h"
 	"ridho.h"
 
-1716205626 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\treeuser.h
+1716265921 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\treeuser.h
 	<stdio.h>
 	<stdlib.h>
+
+1716265983 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\queue.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	"treeUser.h"
+	"boolean.h"
+
+1716265968 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\queue.h
+
+1716265445 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\boolean.h
 

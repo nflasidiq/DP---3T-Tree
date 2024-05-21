@@ -34,12 +34,14 @@
 		<Unit filename="body.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="header.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="treeUser.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="treeUser.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

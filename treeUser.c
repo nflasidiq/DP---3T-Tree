@@ -3,12 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "treeUser.h"
+#include "queue.h"
 #include "header.h"
 
 //int serializeTree(){}
-
-
-
 NodeUser* intializeTree(int ID){
     nodeAddress R = (NodeUser*)malloc(sizeof(NodeUser));
     R->ID = ID;
@@ -26,14 +24,16 @@ NodeUser* newNode(int ID){
     return N;
 }
 
-NodeUser* insertLevelOrder(NodeUser * parent, int IDcontact, int stats){
+NodeUser* insertLevelOrder(NodeUser * parent, int IDcontact, int stats, nodeLLAddress * queueTail, nodeLLAddress * trackedTail){
     nodeAddress C = newNode(IDcontact);
     if(C == NULL)
         exit(1);
 
-    if(C->ID == 1500){//demonstrasi tracing lebih lanjut
-        /**FILE *trackFile = fopen("naufal.txt", "r");
+
+    if(C->ID == 16){//demonstrasi tracing lebih lanjut
+        FILE *trackFile = fopen("naufal.txt", "r");
         char fileContent;
+
         int IDuser;
         if(stats == 0){
             C->ID = IDcontact;
@@ -55,10 +55,11 @@ NodeUser* insertLevelOrder(NodeUser * parent, int IDcontact, int stats){
         }
 
         nodeAddress Pr = C;
-        stats = 1;
+        stats = 0;
         while(fscanf(trackFile, "%d", &IDuser) != EOF){
-            Pr = insertLevelOrder(C, IDuser, stats);
-        }**/
+            Pr = insertLevelOrder(C, IDuser, stats, &queueTail, &trackedTail);
+            stats = 1;
+        }
 
 
     }
@@ -132,14 +133,23 @@ int deserializeTree(char* username_input, int IDuser){
     FILE *userFile = fopen(username_input, "r");
     char fileContent;
     int status = 0;
+    nodeLLAddress head;
+
 
     printf("sekarang sedang melakukan read terhadap file: %s\n", username_input);
     nodeAddress root = NULL;
     root = intializeTree(IDuser);
+    nodeLLAddress queueHead = NULL, queueTail = NULL, trackHead = NULL, trackTail = NULL;
 
+    intializeQueue(IDuser, &queueHead, &queueTail);
+    intializeQueue(IDuser, &trackHead, &trackTail);
+    bool tracked = false;
     while(fscanf(userFile, "%d", &IDuser) != EOF){
-        root = insertLevelOrder(root, IDuser, status);
-        status = 1;
+        //tracked = checkTracked(IDuser, trackHead);
+        if(!(tracked)){
+            root = insertLevelOrder(root, IDuser, status, &queueTail, &trackTail);
+            status = 1;
+        }
     }
 
     printTreePreOrder(root);
@@ -173,6 +183,7 @@ void adminLihatTreeUser(){
 
     while(fscanf(userFile, "%d %s %s", &IDuser, usernameFile, passwordFile) != EOF){
         if(IDinput == IDuser){
+            fclose(userFile);
             printf("ID %d berhasil dipilih\n\nBerikut merupakan tree dari user %s\n\n", IDinput, usernameFile);
             deserializeTree(usernameFile, IDinput);
             scanf("%c", &terminator);
