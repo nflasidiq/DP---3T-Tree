@@ -34,8 +34,12 @@
 		<Unit filename="body.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="boolean.h" />
 		<Unit filename="header.h" />
 		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="queue.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="treeUser.c">

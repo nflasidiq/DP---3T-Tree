@@ -24,12 +24,12 @@ NodeUser* newNode(int ID){
     return N;
 }
 
-NodeUser* insertLevelOrder(NodeUser * parent, int IDcontact, int stats, nodeLLAddress * queueTail, nodeLLAddress * trackedTail){
+NodeUser* insertLevelOrder(NodeUser * parent, int IDcontact, nodeLLPointerAddress queueHead, int stats,nodeLLPointerAddress * queueTail){
     nodeAddress C = newNode(IDcontact);
     if(C == NULL)
         exit(1);
 
-
+    /**
     if(C->ID == 16){//demonstrasi tracing lebih lanjut
         FILE *trackFile = fopen("naufal.txt", "r");
         char fileContent;
@@ -57,7 +57,7 @@ NodeUser* insertLevelOrder(NodeUser * parent, int IDcontact, int stats, nodeLLAd
         nodeAddress Pr = C;
         stats = 0;
         while(fscanf(trackFile, "%d", &IDuser) != EOF){
-            Pr = insertLevelOrder(C, IDuser, stats, &queueTail, &trackedTail);
+            Pr = insertLevelOrder(C, IDuser, stats, &(*queueTail), &(*trackedTail));
             stats = 1;
         }
 
@@ -76,14 +76,32 @@ NodeUser* insertLevelOrder(NodeUser * parent, int IDcontact, int stats, nodeLLAd
             NodeUser *linkNextBrother = parent->firstSon;
             while(linkNextBrother->nextBrother != NULL)
                 linkNextBrother = linkNextBrother->nextBrother;
-
             C->ID = IDcontact;
             C->parent = parent;
             C->nextBrother = NULL;
             C->firstSon = NULL;
             linkNextBrother->nextBrother = C;
         }
+    }**/
+    if(stats == 0){
+        C->ID = IDcontact;
+        C->parent = parent;
+        C->nextBrother = NULL;
+        C->firstSon = NULL;
+        parent->firstSon = C;
     }
+    else{
+        NodeUser *linkNextBrother = parent->firstSon;
+        while(linkNextBrother->nextBrother != NULL)
+            linkNextBrother = linkNextBrother->nextBrother;
+        C->ID = IDcontact;
+        C->parent = parent;
+        C->nextBrother = NULL;
+        C->firstSon = NULL;
+        linkNextBrother->nextBrother = C;
+    }
+
+    insertQueue(C, &(*queueTail));
     return parent;
 }
 
@@ -129,32 +147,87 @@ void printTreePreOrder(NodeUser *tree){
 }
 
 int deserializeTree(char* username_input, int IDuser){
-    strncat(username_input, ".txt", 5);
-    FILE *userFile = fopen(username_input, "r");
-    char fileContent;
-    int status = 0;
-    nodeLLAddress head;
-
-
-    printf("sekarang sedang melakukan read terhadap file: %s\n", username_input);
     nodeAddress root = NULL;
-    root = intializeTree(IDuser);
-    nodeLLAddress queueHead = NULL, queueTail = NULL, trackHead = NULL, trackTail = NULL;
+    nodeAddress levelInsert = NULL;
 
-    intializeQueue(IDuser, &queueHead, &queueTail);
+    root = intializeTree(IDuser);
+    levelInsert = root;
+    nodeLLPointerAddress queueHead = NULL, queueTail = NULL;
+    nodeLLAddress trackHead = NULL, trackTail = NULL;
+
+    intializeQueuePointer(root, &queueHead, &queueTail);
     intializeQueue(IDuser, &trackHead, &trackTail);
-    bool tracked = false;
-    while(fscanf(userFile, "%d", &IDuser) != EOF){
-        //tracked = checkTracked(IDuser, trackHead);
-        if(!(tracked)){
-            root = insertLevelOrder(root, IDuser, status, &queueTail, &trackTail);
-            status = 1;
+    printf("Hasil inisiasi queue = %x\n", queueHead->trackedAddress);
+    int tracked = 0;
+    int IDuserFromAllUser = IDuser;
+    char usernameFile[100], passwordFile[100];
+    int jump = 0;
+    while(queueHead != NULL){
+        FILE *AllUserFile = fopen("AllUser.txt", "r");
+        while(fscanf(AllUserFile, "%d %s %s", &IDuserFromAllUser, usernameFile, passwordFile) != EOF){
+            if(IDuserFromAllUser == queueHead->trackedAddress->ID){
+                strcpy(username_input, usernameFile);
+                break;
+            }
+            else
+                continue;
         }
+
+        if(jump == 0)
+            printf("jump\n");
+        else{
+            tracked = checkTracked(trackHead, IDuserFromAllUser);
+            printf("Tracked = %d\n", tracked);
+        }
+
+        if(tracked == 0)
+        {
+            strncat(username_input, ".txt", 5);
+            FILE *userFile = fopen(username_input, "r");
+            char fileContent;
+            int status = 0;
+
+            printf("sekarang sedang melakukan read terhadap file: %s\n", username_input);
+            while(fscanf(userFile, "%d", &IDuser) != EOF){
+                    printf("Hasil read file %d\n", IDuser);
+                    levelInsert = insertLevelOrder(levelInsert, IDuser,queueHead, status, &queueTail);
+                    status = 1;
+            }
+            fclose(userFile);
+            nodeAddress addressPop = popQueuePointer(&queueHead);
+            levelInsert = addressPop;
+            if(queueHead == NULL){
+                printf("queue kosong\n");
+                break;
+            }
+            insertQueue(addressPop->ID, &trackTail);
+            printQueue(trackHead);
+
+
+            printAddressQueue(queueHead);
+
+        }
+        else{
+            printQueue(queueHead);
+            nodeLLAddress IDpop;
+            IDpop = popQueuePointer(&queueHead);
+            if(queueHead == NULL)
+                printf("berhasil dequee akhir\n");
+            insertQueueAddress(IDpop, &queueTail);
+            insertQueue(IDpop->IDcheck, &trackTail);
+
+            printf("%x Sudah dikunjungi\n", IDpop);
+        }
+
+        jump++;
     }
 
+    printf("sudah bisa sampe sini\n");
+    printQueue(trackHead);
+
+    printf("Address root: %x\n", root);
     printTreePreOrder(root);
 
-    fclose(userFile);
 
     return 0;
 }
