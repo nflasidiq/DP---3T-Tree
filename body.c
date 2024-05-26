@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "header.h"
-#include "ridho.h"
+#include "treeUser.h"
 
 
 //void menu_lihat_status() {
@@ -96,66 +96,66 @@ bool isIDExist(int id) {
     return found; // Mengembalikan hasil pencarian ID
 }
 
-void selectID(const char *currentUsername) {
-    int selectedID;
-    printf("\nMasukkan ID yang ingin Anda pilih: ");
-    scanf(" %d", &selectedID);
+// void selectID(const char *currentUsername) {
+//     int selectedID;
+//     printf("\nMasukkan ID yang ingin Anda pilih: ");
+//     scanf(" %d", &selectedID);
 
-    // Memanggil fungsi untuk mencetak pesan berdasarkan keberadaan ID di file
-    if (isIDExist(selectedID)) {
-        printf("ID %d berhasil dipilih.\n", selectedID);
-        sleep(2);
-        inputDuration(selectedID); // Memanggil fungsi untuk meminta durasi setelah ID berhasil dipilih
-	} else {
-        printf("ID %d tidak ditemukan.\n", selectedID);
-        sleep(2);
-    	system("cls");
-    	showUserInformation(currentUsername);
-    }
-}
+//     // Memanggil fungsi untuk mencetak pesan berdasarkan keberadaan ID di file
+//     if (isIDExist(selectedID)) {
+//         printf("ID %d berhasil dipilih.\n", selectedID);
+//         sleep(2);
+//         inputDuration(selectedID); // Memanggil fungsi untuk meminta durasi setelah ID berhasil dipilih
+// 	} else {
+//         printf("ID %d tidak ditemukan.\n", selectedID);
+//         sleep(2);
+//     	system("cls");
+//     	showUserInformation(currentUsername);
+//     }
+// }
 
-void inputDuration(int selectedID) {
-    int duration;
-    system("cls");
-    printf("Masukkan durasi untuk ID %d (dalam menit): ", selectedID);
-    scanf("%d", &duration);
-    sleep(2); system("cls");
-}
+// void inputDuration(int selectedID) {
+//     int duration;
+//     system("cls");
+//     printf("Masukkan durasi untuk ID %d (dalam menit): ", selectedID);
+//     scanf("%d", &duration);
+//     sleep(2); system("cls");
+// }
 
-// Fungsi untuk menampilkan informasi pengguna dari file
-void showUserInformation(const char *currentUsername) {
-    FILE *filePointer;
-    char filename[] = "AllUser.txt";
-    char buffer[30]; // Buffer untuk menyimpan baris yang dibaca
-    char username[20]; // Untuk menyimpan username dari setiap baris
-	int id;
+// // Fungsi untuk menampilkan informasi pengguna dari file
+// void showUserInformation(const char *currentUsername) {
+//     FILE *filePointer;
+//     char filename[] = "AllUser.txt";
+//     char buffer[30]; // Buffer untuk menyimpan baris yang dibaca
+//     char username[20]; // Untuk menyimpan username dari setiap baris
+// 	int id;
 
-    // Membuka file AllUser.txt
-    filePointer = fopen(filename, "r");
+//     // Membuka file AllUser.txt
+//     filePointer = fopen(filename, "r");
 
-    // Memeriksa apakah file berhasil dibuka
-    if (filePointer == NULL) {
-        printf("Gagal membuka file.\n");
-        return; // Keluar dari fungsi jika file tidak dapat dibuka
-    }
+//     // Memeriksa apakah file berhasil dibuka
+//     if (filePointer == NULL) {
+//         printf("Gagal membuka file.\n");
+//         return; // Keluar dari fungsi jika file tidak dapat dibuka
+//     }
 
-    // Menampilkan informasi pengguna dari file
-    printf("Daftar Kontak:\n");
-    while (fgets(buffer, sizeof(buffer), filePointer) != NULL) {
-        // Menggunakan sscanf untuk membaca dua string pertama dari setiap baris
-        sscanf(buffer, "%d %s", &id, username);
-        // Jika username cocok dengan currentUsername, abaikan baris ini
-        if (strcmp(username, currentUsername) == 0) {
-            continue;
-    	}
-        printf("%d %s\n", id, username); // Menampilkan ID dan username
-    }
+//     // Menampilkan informasi pengguna dari file
+//     printf("Daftar Kontak:\n");
+//     while (fgets(buffer, sizeof(buffer), filePointer) != NULL) {
+//         // Menggunakan sscanf untuk membaca dua string pertama dari setiap baris
+//         sscanf(buffer, "%d %s", &id, username);
+//         // Jika username cocok dengan currentUsername, abaikan baris ini
+//         if (strcmp(username, currentUsername) == 0) {
+//             continue;
+//     	}
+//         printf("%d %s\n", id, username); // Menampilkan ID dan username
+//     }
 
-    // Menutup file setelah selesai membaca
-    fclose(filePointer);
+//     // Menutup file setelah selesai membaca
+//     fclose(filePointer);
 
-	selectID(currentUsername);
-}
+// 	selectID(currentUsername);
+// }
 
 
 void print_all_users() {
@@ -165,40 +165,45 @@ void print_all_users() {
         exit(1);
     }
 
-    char line[50];
-    while (fgets(line, sizeof(line), file)) {
-        printf("%s", line);
+    printf("%-20s %-20s %-20s\n", "ID", "Nama", "Password");
+    printf("------------------------------------------------------------\n");
+
+    char ID[20], name[20], password[30];
+    while (fscanf(file, "%s %s %s", ID, name, password) == 3) {
+        printf("%-20s %-20s %-20s\n", ID, name, password);
     }
 
     fclose(file);
+    getchar();
+    getchar();
 }
 
 void print_tree(const char *filename) {
     system(filename);
 }
 
-void login_admin(Session *session) {
-    const char *admin_username = "admin";
-    const char *admin_password = "password";
+// void login_admin(Session *session) {
+//     const char *admin_username = "admin";
+//     const char *admin_password = "password";
 
-    char input_username[20], input_password[20];
-    printf("Enter admin username: ");
-    fgets(input_username, sizeof(input_username), stdin);
-    input_username[strcspn(input_username, "\n")] = '\0';
-    printf("Enter admin password: ");
-    fgets(input_password, sizeof(input_password), stdin);
-    input_password[strcspn(input_password, "\n")] = '\0';
+//     char input_username[20], input_password[20];
+//     printf("Enter admin username: ");
+//     fgets(input_username, sizeof(input_username), stdin);
+//     input_username[strcspn(input_username, "\n")] = '\0';
+//     printf("Enter admin password: ");
+//     fgets(input_password, sizeof(input_password), stdin);
+//     input_password[strcspn(input_password, "\n")] = '\0';
 
-    if (strcmp(admin_username, input_username) == 0 && strcmp(admin_password, input_password) == 0) {
-        // Admin login successful
-        printf("Welcome, admin!\n");
-        print_all_users();
-        print_tree("admin.txt");
-    } else {
-        // Admin login failed
-        printf("Invalid admin credentials\n");
-    }
-}
+//     if (strcmp(admin_username, input_username) == 0 && strcmp(admin_password, input_password) == 0) {
+//         // Admin login successful
+//         printf("Welcome, admin!\n");
+//         print_all_users();
+//         print_tree("admin.txt");
+//     } else {
+//         // Admin login failed
+//         printf("Invalid admin credentials\n");
+//     }
+// }
 
 bool isFileExist(const char *filename) {
     FILE *file = fopen(filename, "r");
@@ -257,16 +262,16 @@ void createUserFile(User newUser) {
     strcat(filename, ".txt"); //file agar.txt
 
     // Membuka file dengan mode "w" (menulis)
-    filePointer = fopen(filename, "w");
+    filePointer = fopen(filename, "a");
 
     // Memeriksa apakah file berhasil dibuka
     if (filePointer == NULL) {
         printf("Gagal membuat file.\n");
     } else {
         // Menulis informasi pengguna ke dalam file
-        fprintf(filePointer, "%d ", newUser.id);
-        fprintf(filePointer, "%s ", newUser.username);
-        fprintf(filePointer, "%s", newUser.password);
+        // fprintf(filePointer, "%d ", newUser.id);
+        // fprintf(filePointer, "%s ", newUser.username);
+        // fprintf(filePointer, "%s", newUser.password);
         printf("File %s berhasil dibuat untuk pengguna baru.\n", newUser.username);
         fclose(filePointer);
     }
@@ -353,6 +358,58 @@ void registerAdmin() {
 
     // Memanggil fungsi untuk membuat file .txt untuk admin baru
     createAdminFile(newAdmin);
+}
+
+void logContact(User *currentSession) {
+    char contactUsername[90];
+    int duration;
+    
+    // Meminta input username kontak
+    printf("Enter contact username: ");
+    scanf("%s", contactUsername);
+    
+    // Meminta input durasi kontak dalam menit
+    printf("Enter contact duration (minutes): ");
+    scanf("%d", &duration);
+
+    // Jika durasi lebih dari 10 menit, log kontak
+    if (duration > 10) {
+        char filename[90 + 4];
+        sprintf(filename, "%s.txt", contactUsername);
+        
+        // Membuka file dalam mode append
+        FILE *file = fopen(filename, "a");
+        if (file == NULL) {
+            printf("Error opening file.\n");
+            return;
+        }
+
+        // Menambahkan ID pengguna saat ini ke file kontak
+        fprintf(file, "%02d\n", currentSession->id);
+        fclose(file);
+        printf("Contact logged successfully.\n");
+    } else {
+        printf("Contact duration too short to log.\n");
+    }
+}
+
+void reportInfection(User *currentSession) {
+    char choice;
+    printf("Apakah anda yakin ingin melanjutkan? (y/n): ");
+    scanf(" %c", &choice);
+
+    if (choice == 'y' || choice == 'Y') {
+        FILE *file = fopen("userTerinfeksi.txt", "a");
+        if (file == NULL) {
+            printf("Error opening file.\n");
+            return;
+        }
+        fprintf(file, "%d %s\n", currentSession->id, currentSession->username);
+        fclose(file);
+        printf("Infection reported successfully.\n");
+    } else {
+        printf("Infection report canceled.\n");
+    }
 }
 
 void loginAllUser(Session *session) {
@@ -448,7 +505,7 @@ void loginAllUser(Session *session) {
                     switch(pilihan) {
                         case 1:
                             system("cls");
-                			showUserInformation(session->user.username); // Panggil fungsi untuk menampilkan informasi pengguna
+                			logContact(&session->user);// Panggil fungsi untuk menampilkan informasi pengguna
                             break;
                         case 2:
 			                printf("Anda memilih Lihat Status.\n");
@@ -461,9 +518,8 @@ void loginAllUser(Session *session) {
 			                system("cls");
                             break;
                         case 4:
-			                printf("Anda memilih Laporkan Terinfeksi.\n");
-			            	sleep(2);
-			                system("cls");
+                            system("cls");
+			                reportInfection(&session->user);
                             break;
                         case 5:
                             printf("Anda memilih Keluar. Terima kasih!\n");

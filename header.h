@@ -28,15 +28,17 @@ typedef struct session {
 
 void registerAdmin();
 void registerUser();
-void showUserInformation(const char *currentUsername);
+// void showUserInformation(const char *currentUsername);
+void logContact(User *currentSession); //Sama seperti showUserInformation
 bool isFileExist(const char *filename);
 bool isUsernameUsed(const char *username);
 bool isIDUsed(int id, const char *username);
 bool isIDExist(int id);
-void inputDuration(int selectedID);
+// void inputDuration(int selectedID);
 int generateID();
 int generateUniqueID(User newUser);
 void createUserFile(User newUser);
 void loginAllUser(Session *session);
+void reportInfection(User *currentSession);
 
 #endif // HEADER_H
