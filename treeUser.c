@@ -264,7 +264,3 @@ void adminLihatTreeUser(){
     scanf("%c", &terminator);
 
 }
-
-
-
-

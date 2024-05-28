@@ -361,44 +361,44 @@ void logContact(User *currentSession) {
     // Membuka file AllUser.txt untuk membaca daftar pengguna
     FILE *filePointer;
     char filename[] = "AllUser.txt";
-    char buffer[100]; // Buffer untuk menyimpan baris yang dibaca
+    char buffer[60]; // Buffer untuk menyimpan baris yang dibaca
     char username[50];
     int id;
     bool userFound = false;
 
-	do {
-    	// Membuka file AllUser.txt
-    	filePointer = fopen(filename, "r");
-    	if (filePointer == NULL) {
-        	printf("Error opening AllUser.txt.\n");
-        	return;
-    	}
+    do {
+        // Membuka file AllUser.txt
+        filePointer = fopen(filename, "r");
+        if (filePointer == NULL) {
+            printf("Error: Gagal membuka file AllUser.txt.\n");
+            return;
+        }
 
-    	// Menampilkan daftar pengguna kecuali pengguna yang sedang login
-    	printf("Daftar Pengguna:\n");
-    	while (fgets(buffer, sizeof(buffer), filePointer) != NULL) {
-        	sscanf(buffer, "%d %s", &id, username);
-        	if (strcmp(username, currentSession->username) != 0) {
-            	printf("%d %s\n", id, username);
-        		}
-    		}
-    		fclose(filePointer);
+        // Menampilkan daftar pengguna kecuali pengguna yang sedang login
+        printf("Daftar Pengguna:\n");
+        while (fgets(buffer, sizeof(buffer), filePointer) != NULL) {
+            sscanf(buffer, "%d %s", &id, username);
+            if (strcmp(username, currentSession->username) != 0) {
+                printf("%d %s\n", id, username);
+            }
+        }
+        fclose(filePointer);
 
-    		// Meminta input username kontak
-        	printf("\nEnter contact username: ");
-        	scanf("%s", contactUsername);
+        // Meminta input username kontak
+        printf("\nMasukkan username kontak: ");
+        scanf("%s", contactUsername);
 
-        	// Cek apakah contactUsername sama dengan username yang sedang login
-        	if (strcmp(contactUsername, currentSession->username) == 0) {
-            	printf("You cannot log contact with yourself. Please enter a different username.\n");
-            	sleep(2);
-        	}
+        // Cek apakah contactUsername sama dengan username yang sedang login
+        if (strcmp(contactUsername, currentSession->username) == 0) {
+            printf("Tidak boleh kontak diri sendiri. Masukkan nama yang ada didaftar.\n");
+            sleep(2);
+        }
     } while (strcmp(contactUsername, currentSession->username) == 0);
 
     // Membuka kembali file AllUser.txt untuk memeriksa keberadaan username
     filePointer = fopen(filename, "r");
     if (filePointer == NULL) {
-        printf("Error opening AllUser.txt.\n");
+        printf("Error: opening AllUser.txt.\n");
         sleep(2);
         return;
     }
@@ -414,24 +414,24 @@ void logContact(User *currentSession) {
 
     // Jika username tidak ditemukan, keluarkan pesan kesalahan
     if (!userFound) {
-        printf("Username not found in AllUser.txt.\n");
+        printf("Username tidak ada di AllUser.txt.\n");
         sleep(2);
         return;
     }
 
     // Meminta input durasi kontak dalam menit
-    printf("Enter contact duration (minutes): ");
+    printf("Masukkan durasi kontak (menit): ");
     scanf("%d", &duration);
 
     // Jika durasi lebih dari 10 menit, log kontak
-    if (duration > 10) {
+    if (duration >= 10) {
         char contactFilename[50 + 4];
         sprintf(contactFilename, "%s.txt", currentSession->username); // Menggunakan username pengguna yang sedang login
 
         // Membuka file dalam mode append
         FILE *contactFile = fopen(contactFilename, "a");
         if (contactFile == NULL) {
-            printf("Error opening contact file.\n");
+            printf("Error: gagal membuka file.\n");
             sleep(2);
             return;
         }
@@ -439,10 +439,24 @@ void logContact(User *currentSession) {
         // Menambahkan ID kontak ke file pengguna yang sedang login
         fprintf(contactFile, "%02d\n", id); // Menambahkan ID user B ke file user A
         fclose(contactFile);
-        printf("Contact logged successfully.\n");
+
+        // Membuka file user B untuk menambahkan ID user A
+        sprintf(contactFilename, "%s.txt", contactUsername);
+        contactFile = fopen(contactFilename, "a");
+        if (contactFile == NULL) {
+            printf("Error: gagal membuka file dikontak.\n");
+            sleep(2);
+            return;
+        }
+
+        // Menambahkan ID user A ke file user B
+        fprintf(contactFile, "%02d\n", currentSession->id); // Menambahkan ID user A ke file user B
+        fclose(contactFile);
+
+        printf("User telah berhasil melakukan kontak.\n");
         sleep(2);
     } else {
-        printf("Contact duration too short to log.\n");
+        printf("Durasi untuk berkontak kurang dari 10 menit.\n");
         sleep(2);
     }
 }
@@ -455,16 +469,16 @@ void reportInfection(User *currentSession) {
     if (choice == 'y' || choice == 'Y') {
         FILE *file = fopen("userTerinfeksi.txt", "a");
         if (file == NULL) {
-            printf("Error opening file.\n");
+            printf("Error: gagal membuka file.\n");
             sleep(2);
             return;
         }
         fprintf(file, "%d %s\n", currentSession->id, currentSession->username);
         fclose(file);
-        printf("Infection reported successfully.\n");
+        printf("Melaporkan diri terinfeksi berhasil.\n");
         sleep(2);
     } else {
-        printf("Infection report canceled.\n");
+        printf("Batal melaporkan.\n");
         sleep(2);
     }
 }
@@ -480,7 +494,7 @@ void infectionMenu(User *currentSession) {
     // Membuka file userTerinfeksi.txt
     filePointer = fopen(filename, "r");
     if (filePointer == NULL) {
-        printf("Error opening userTerinfeksi.txt.\n");
+        printf("Error: gagal membuka userTerinfeksi.txt.\n");
         return;
     }
 
@@ -503,7 +517,8 @@ void infectionMenu(User *currentSession) {
     // Membuka file kembali untuk memeriksa keberadaan ID
     filePointer = fopen(filename, "r");
     if (filePointer == NULL) {
-        printf("Error opening userTerinfeksi.txt.\n");
+        printf("Error: gagal membuka userTerinfeksi.txt.\n");
+        sleep(2);
         return;
     }
 
