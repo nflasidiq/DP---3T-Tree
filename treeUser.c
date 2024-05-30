@@ -193,8 +193,19 @@ int deserializeTree(char* username_input, int IDuser){
             printf("sekarang sedang melakukan read terhadap file: %s\n", username_input);
             while(fscanf(userFile, "%d", &IDuser) != EOF){
                     printf("Hasil read file %d\n", IDuser);
-                    levelInsert = insertLevelOrder(levelInsert, IDuser,queueHead, status, &queueTail);
-                    status = 1;
+                    if(jump != 0){
+                        if(IDuser != levelInsert->parent->ID){
+                            levelInsert = insertLevelOrder(levelInsert, IDuser,queueHead, status, &queueTail);
+                            status = 1;
+                        }
+                        else
+                            continue;
+                    }
+                    else{
+                        levelInsert = insertLevelOrder(levelInsert, IDuser,queueHead, status, &queueTail);
+                        status = 1;
+                    }
+
             }
             printTreePreOrder(root);
             fclose(userFile);
