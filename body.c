@@ -484,6 +484,7 @@ void reportInfection(User *currentSession) {
             return;
         }
         fprintf(file, "%d %s\n", currentSession->id, currentSession->username);
+        printf("%d sudah di write ke file terinfeksi\n", currentSession->id);
         fclose(file);
         printf("Melaporkan diri terinfeksi berhasil.\n");
         sleep(2);
@@ -651,6 +652,24 @@ void loginAllUser(Session *session) {
                             break;
                         case 2:
 			                printf("Anda memilih Lihat Status.\n");
+			                int levelInfection = diagnoseInfectionStatus(id);
+			                printf("level infeksi %s: %d\n", username, levelInfection);
+			                if(levelInfection == 0)
+                                printf("User %s telah terinfeksi\n", username);
+			                else if(levelInfection == 1)
+                                printf("User %s kemungkinan besar terinfeksi\n", username);
+			                else if(levelInfection == 2)
+                                printf("User %s kemungkinan sedang terinfeksi\n", username);
+                            else if(levelInfection == 3)
+                                printf("User %s kemungkinan kecil terinfeksi\n", username);
+                            else
+                                printf("Tidak ada tanda tanda User %s terinfeksi\n", username);
+
+                            char pause;
+                            printf("Klik (enter) untuk lanjut\n");
+                            scanf("%c", &pause);
+                            scanf("%c", &pause);
+
 			                sleep(2);
 			                system("cls");
                             break;
