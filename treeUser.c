@@ -157,7 +157,6 @@ int deserializeTree(char* username_input, int IDuser){
 
     intializeQueuePointer(root, &queueHead, &queueTail);
     intializeQueue(IDuser, &trackHead, &trackTail);
-    printf("Hasil inisiasi queue = %x\n", queueHead->trackedAddress);
     int tracked = 0;
     int IDuserFromAllUser = IDuser;
     char usernameFile[100], passwordFile[100];
@@ -175,13 +174,10 @@ int deserializeTree(char* username_input, int IDuser){
 
         if(jump == 0)
         {
-            printf("jump\n");
             //nodeAddress addressPop = popQueuePointer(&queueHead);
         }
         else{
             tracked = checkTracked(trackHead, levelInsert->ID);
-            printf("Tracked = %d\n", tracked);
-            printf("%x dengan value %d Sudah pernah dikunjungi\n", levelInsert, levelInsert->ID);
 
         }
 
@@ -193,9 +189,7 @@ int deserializeTree(char* username_input, int IDuser){
             char timeStampBuffer[50];
             int status = 0;
 
-            printf("sekarang sedang melakukan read terhadap file: %s\n", username_input);
             while(fscanf(userFile, "%d %s", &IDuser, timeStampBuffer) != EOF){
-                    printf("Hasil read file %d\n", IDuser);
                     if(jump != 0){
                         if(IDuser != levelInsert->parent->ID){
                             levelInsert = insertLevelOrder(levelInsert, IDuser,queueHead, status, &queueTail);
@@ -210,32 +204,19 @@ int deserializeTree(char* username_input, int IDuser){
                     }
 
             }
-            printTreePreOrder(root);
             fclose(userFile);
             nodeAddress addressPop = popQueuePointer(&queueHead);
             if(queueHead == NULL){
-                printf("berhasil dequee akhir\n");
                 break;
             }
             levelInsert = queueHead->trackedAddress;
-            printf("Node yang selanjutnya ter-attach: %x value %d\n",levelInsert,levelInsert->ID);
-            if(queueHead == NULL){
-                printf("queue kosong\n");
-                break;
-            }
             insertQueue(addressPop->ID, &trackTail);
-            printQueue(trackHead);
-
-
-            printAddressQueue(queueHead);
 
         }
         else{
-            printAddressQueue(queueHead);
             nodeLLAddress IDpop;
             IDpop = popQueuePointer(&queueHead);
             if(queueHead == NULL){
-                printf("berhasil dequee akhir\n");
                 break;
             }
             levelInsert = queueHead->trackedAddress;
@@ -244,10 +225,6 @@ int deserializeTree(char* username_input, int IDuser){
         jump++;
     }
 
-    printf("sudah bisa sampe sini\n");
-    printQueue(trackHead);
-
-    printf("Address root: %x\n", root);
     printTreePreOrder(root);
 
 
@@ -310,7 +287,6 @@ int treeDiagnoseStatus(char* username_input, int IDuser, int IDdiagnosed){
 
     intializeQueuePointer(root, &queueHead, &queueTail);
     intializeQueue(IDuser, &trackHead, &trackTail);
-    printf("Hasil inisiasi queue = %x\n", queueHead->trackedAddress);
     int tracked = 0;
     int IDuserFromAllUser = IDuser;
     char usernameFile[100], passwordFile[100];
@@ -328,13 +304,10 @@ int treeDiagnoseStatus(char* username_input, int IDuser, int IDdiagnosed){
 
         if(jump == 0)
         {
-            printf("jump\n");
             //nodeAddress addressPop = popQueuePointer(&queueHead);
         }
         else{
             tracked = checkTracked(trackHead, levelInsert->ID);
-            printf("Tracked = %d\n", tracked);
-            printf("%x dengan value %d Sudah pernah dikunjungi\n", levelInsert, levelInsert->ID);
 
         }
 
@@ -346,9 +319,7 @@ int treeDiagnoseStatus(char* username_input, int IDuser, int IDdiagnosed){
             char timeStampBuffer[50];
             int status = 0;
 
-            printf("sekarang sedang melakukan read terhadap file: %s\n", username_input);
             while(fscanf(userFile, "%d %s", &IDuser, timeStampBuffer) != EOF){
-                    printf("Hasil read file %d\n", IDuser);
                     if(jump != 0){
                         if(IDuser != levelInsert->parent->ID){
                             levelInsert = insertLevelOrder(levelInsert, IDuser,queueHead, status, &queueTail);
@@ -370,28 +341,21 @@ int treeDiagnoseStatus(char* username_input, int IDuser, int IDdiagnosed){
                         continue;
 
             }
-            printTreePreOrder(root);
             fclose(userFile);
             nodeAddress addressPop = popQueuePointer(&queueHead);
-            levelInsert = queueHead->trackedAddress;
-            printf("Node yang selanjutnya ter-attach: %x value %d\n",levelInsert,levelInsert->ID);
             if(queueHead == NULL){
-                printf("queue kosong\n");
                 break;
             }
+            levelInsert = queueHead->trackedAddress;
             insertQueue(addressPop->ID, &trackTail);
-            printQueue(trackHead);
 
 
-            printAddressQueue(queueHead);
 
         }
         else{
-            printAddressQueue(queueHead);
             nodeLLAddress IDpop;
             IDpop = popQueuePointer(&queueHead);
             if(queueHead == NULL){
-                printf("berhasil dequee akhir\n");
                 break;
             }
             levelInsert = queueHead->trackedAddress;
@@ -399,12 +363,6 @@ int treeDiagnoseStatus(char* username_input, int IDuser, int IDdiagnosed){
 
         jump++;
     }
-
-    printf("sudah bisa sampe sini\n");
-    printQueue(trackHead);
-
-    printf("Address root: %x\n", root);
-
 
     return countTendency(root, IDdiagnosed);
 }

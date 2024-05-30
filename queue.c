@@ -75,8 +75,6 @@ int popQueue(nodeLLAddress * head){
 
     (*head) = (*head)->next;
     free(P);
-    printf("dequee\n");
-
     return tempValue;
 
 }
@@ -84,7 +82,6 @@ int popQueue(nodeLLAddress * head){
 NodeUser * popQueuePointer(nodeLLPointerAddress * head){
     NodeUser* tempValue = (*head)->trackedAddress;
     nodeLLPointerAddress P = *head;
-    printf("Dequeue value = %d\n", (*head)->trackedAddress->ID);
 
     /**if((*head)->next != NULL){
         (*head) = (*head)->next;
@@ -109,7 +106,6 @@ NodeUser * popQueuePointer(nodeLLPointerAddress * head){
     if((*head) == NULL)
         return NULL;
 
-    printf("dequee\n");
 
     return tempValue;
 
@@ -118,8 +114,6 @@ NodeUser * popQueuePointer(nodeLLPointerAddress * head){
 
 
 void printQueue(nodeLLAddress head){
-    printf("Head first: %d\n", head->IDcheck);
-
     printf("Isi dari queue: ");
     while(head != NULL){
         printf("%d ", head->IDcheck);

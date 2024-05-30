@@ -574,7 +574,7 @@ void infectionMenu(User *currentSession) {
     // Membuka file userTerinfeksi.txt
     filePointer = fopen(filename, "r");
     if (filePointer == NULL) {
-        printf("Error: gagal membuka userTerinfeksi.txt.\n");
+        printf("Error: gagal membuka userTerinfeksi.txt\n");
         return;
     }
 
@@ -583,9 +583,7 @@ void infectionMenu(User *currentSession) {
     while (fgets(buffer, sizeof(buffer), filePointer) != NULL) {
         sscanf(buffer, "%d %s", &id, username);
         // Memeriksa apakah user yang sedang login ada di dalam daftar user terinfeksi
-        if (id != currentSession->id) {
             printf("%d %s\n", id, username);
-        }
     }
     fclose(filePointer);
 
@@ -605,7 +603,7 @@ void infectionMenu(User *currentSession) {
     while (fgets(buffer, sizeof(buffer), filePointer) != NULL) {
         sscanf(buffer, "%d %s", &id, username);
         // Memeriksa apakah ID yang dipilih adalah ID dari user yang sedang login
-        if (id == selectedID && id != currentSession->id) {
+        if (id == selectedID) {
             userFound = true;
             break;
         }
@@ -615,6 +613,11 @@ void infectionMenu(User *currentSession) {
     // Validasi ID user terinfeksi
     if (userFound) {
         printf("User dengan ID %d dan username %s berhasil dipilih.\n", selectedID, username);
+        deserializeTree(username, selectedID);
+        char pause;
+        scanf("%c", &pause);
+        scanf("%c", &pause);
+
         sleep(2);
     } else {
         printf("ID user terinfeksi tidak ditemukan atau tidak dapat diakses.\n");
