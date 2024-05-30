@@ -358,6 +358,14 @@ void logContact(User *currentSession) {
     char contactUsername[50];
     int duration;
 
+    time_t now;
+    struct tm * timeinfo;
+    time( &now );
+    timeinfo = localtime( &now );
+    char nowInfo[50];
+    strftime(nowInfo, sizeof(nowInfo), "%x-%I:%M%p", timeinfo);
+    printf("Time now before: %s\n", nowInfo);
+
     // Membuka file AllUser.txt untuk membaca daftar pengguna
     FILE *filePointer;
     char filename[] = "AllUser.txt";
@@ -365,6 +373,7 @@ void logContact(User *currentSession) {
     char username[50];
     int id;
     bool userFound = false;
+
 
     do {
         // Membuka file AllUser.txt
@@ -395,6 +404,7 @@ void logContact(User *currentSession) {
         }
     } while (strcmp(contactUsername, currentSession->username) == 0);
 
+
     // Membuka kembali file AllUser.txt untuk memeriksa keberadaan username
     filePointer = fopen(filename, "r");
     if (filePointer == NULL) {
@@ -405,9 +415,6 @@ void logContact(User *currentSession) {
 
     while (fgets(buffer, sizeof(buffer), filePointer) != NULL) {
         sscanf(buffer, "%d %s", &id, username);
-        printf("Buffer: %s\n", buffer);
-        printf("String: %s\n", username);
-        printf("ID: %d\n", id);
         if (strcmp(username, contactUsername) == 0) {
             userFound = true;
             break;
@@ -427,48 +434,110 @@ void logContact(User *currentSession) {
     printf("Masukkan durasi kontak (menit): ");
     scanf("%d", &duration);
 
+
     // Jika durasi lebih dari 10 menit, log kontak
     if (duration >= 10) {
         char contactFilename[50 + 4];
         sprintf(contactFilename, "%s.txt", currentSession->username); // Menggunakan username pengguna yang sedang login
-
+        char timestampTemp[50];
+        int IDtemp, duplicate = 0;
         // Membuka file dalam mode append
-        FILE *contactFile = fopen(contactFilename, "a");
-        if (contactFile == NULL) {
+        FILE *contactFile = fopen(contactFilename, "r");
+        FILE *tempFile = fopen("tempFile.txt", "w");
+
+        if (contactFile == NULL || tempFile == NULL) {
             printf("Error: gagal membuka file.\n");
             sleep(2);
             return;
         }
+        while(fscanf(contactFile, "%d %s",&IDtemp, timestampTemp) != EOF){
+            if(IDtemp == id){
+                fprintf(tempFile, "%d %s\n", IDtemp, nowInfo);
+                duplicate = 1;
+            }
+            else
+                fprintf(tempFile, "%d %s\n", IDtemp, timestampTemp);
+        }
+
+        if(duplicate == 0)
+            fprintf(tempFile, "%d %s\n", id, nowInfo);
+
         printf("ID B ke A: %d\n", id);
 
         // Menambahkan ID kontak ke file pengguna yang sedang login
-        fprintf(contactFile, "%d\n", id); // Menambahkan ID user B ke file user A
         fclose(contactFile);
+        fclose(tempFile);
+
+        //update contactFile dengan cara copy paste dari tempFile
+        contactFile = fopen(contactFilename, "w");
+        tempFile = fopen("tempFile.txt", "r");
+
+
+        while(fscanf(tempFile, "%d %s", &IDtemp, timestampTemp) != EOF){
+            fprintf(contactFile, "%d %s\n", IDtemp, timestampTemp);
+        }
+
+        printf("test\n");
+
+        fclose(contactFile);
+        fclose(tempFile);
+
 
         // Membuka file user B untuk menambahkan ID user A
         sprintf(contactFilename, "%s.txt", contactUsername);
-        contactFile = fopen(contactFilename, "a");
-        if (contactFile == NULL) {
-            printf("Error: gagal membuka file dikontak.\n");
+        contactFile = fopen(contactFilename, "r");
+        tempFile = fopen("tempFile.txt", "w");
+
+        if (contactFile == NULL || tempFile == NULL) {
+            printf("Error: gagal membuka file.\n");
             sleep(2);
             return;
         }
+        while(fscanf(contactFile, "%d %s",&IDtemp, timestampTemp) != EOF){
+            if(IDtemp == currentSession->id){
+                fprintf(tempFile, "%d %s\n", IDtemp, nowInfo);
+                duplicate = 1;
+            }
+            else
+                fprintf(tempFile, "%d %s\n", IDtemp, timestampTemp);
+        }
+
+        if(duplicate == 0)
+            fprintf(tempFile, "%d %s\n", currentSession->id, nowInfo);
 
         printf("ID A ke B: %d\n", currentSession->id);
 
-        // Menambahkan ID user A ke file user B
-        fprintf(contactFile, "%02d\n", currentSession->id); // Menambahkan ID user A ke file user B
+        // Menambahkan ID kontak ke file pengguna yang sedang login
         fclose(contactFile);
+        fclose(tempFile);
 
+        //update contactFile dengan cara copy paste dari tempFile
+        contactFile = fopen(contactFilename, "w");
+        tempFile = fopen("tempFile.txt", "r");
+
+
+        while(fscanf(tempFile, "%d %s", &IDtemp, timestampTemp) != EOF){
+            fprintf(contactFile, "%d %s\n", IDtemp, timestampTemp);
+        }
+
+        fclose(contactFile);
+        fclose(tempFile);
         printf("User telah berhasil melakukan kontak.\n");
+
+        char pause;
+        scanf("%c", &pause);
+        scanf("%c", &pause);
+
         sleep(2);
     } else {
-        printf("Durasi untuk berkontak kurang dari 10 menit.\n");
+        printf("User telah berhasil melakukan kontak kurang dari 10 menit.\n");
         sleep(2);
     }
 
     char terminator;
     scanf("%c", &terminator);
+
+
 }
 
 void reportInfection(User *currentSession) {

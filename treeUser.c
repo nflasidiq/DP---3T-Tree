@@ -190,10 +190,11 @@ int deserializeTree(char* username_input, int IDuser){
             strncat(username_input, ".txt", 5);
             FILE *userFile = fopen(username_input, "r");
             char fileContent;
+            char timeStampBuffer[50];
             int status = 0;
 
             printf("sekarang sedang melakukan read terhadap file: %s\n", username_input);
-            while(fscanf(userFile, "%d", &IDuser) != EOF){
+            while(fscanf(userFile, "%d %s", &IDuser, timeStampBuffer) != EOF){
                     printf("Hasil read file %d\n", IDuser);
                     if(jump != 0){
                         if(IDuser != levelInsert->parent->ID){
@@ -212,6 +213,10 @@ int deserializeTree(char* username_input, int IDuser){
             printTreePreOrder(root);
             fclose(userFile);
             nodeAddress addressPop = popQueuePointer(&queueHead);
+            if(queueHead == NULL){
+                printf("berhasil dequee akhir\n");
+                break;
+            }
             levelInsert = queueHead->trackedAddress;
             printf("Node yang selanjutnya ter-attach: %x value %d\n",levelInsert,levelInsert->ID);
             if(queueHead == NULL){
@@ -338,10 +343,11 @@ int treeDiagnoseStatus(char* username_input, int IDuser, int IDdiagnosed){
             strncat(username_input, ".txt", 5);
             FILE *userFile = fopen(username_input, "r");
             char fileContent;
+            char timeStampBuffer[50];
             int status = 0;
 
             printf("sekarang sedang melakukan read terhadap file: %s\n", username_input);
-            while(fscanf(userFile, "%d", &IDuser) != EOF){
+            while(fscanf(userFile, "%d %s", &IDuser, timeStampBuffer) != EOF){
                     printf("Hasil read file %d\n", IDuser);
                     if(jump != 0){
                         if(IDuser != levelInsert->parent->ID){
