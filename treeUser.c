@@ -101,7 +101,7 @@ NodeUser* insertLevelOrder(NodeUser * parent, int IDcontact, nodeLLPointerAddres
         linkNextBrother->nextBrother = C;
     }
 
-    insertQueue(C, &(*queueTail));
+    insertQueueAddress(C, &(*queueTail));
     return parent;
 }
 
@@ -174,7 +174,10 @@ int deserializeTree(char* username_input, int IDuser){
         }
 
         if(jump == 0)
+        {
             printf("jump\n");
+            //nodeAddress addressPop = popQueuePointer(&queueHead);
+        }
         else{
             tracked = checkTracked(trackHead, IDuserFromAllUser);
             printf("Tracked = %d\n", tracked);
@@ -193,9 +196,11 @@ int deserializeTree(char* username_input, int IDuser){
                     levelInsert = insertLevelOrder(levelInsert, IDuser,queueHead, status, &queueTail);
                     status = 1;
             }
+            printTreePreOrder(root);
             fclose(userFile);
             nodeAddress addressPop = popQueuePointer(&queueHead);
-            levelInsert = addressPop;
+            levelInsert = queueHead->trackedAddress;
+            printf("Node yang selanjutnya ter-attach: %x value %d\n",levelInsert,levelInsert->ID);
             if(queueHead == NULL){
                 printf("queue kosong\n");
                 break;
@@ -208,15 +213,16 @@ int deserializeTree(char* username_input, int IDuser){
 
         }
         else{
-            printQueue(queueHead);
+            printAddressQueue(queueHead);
             nodeLLAddress IDpop;
             IDpop = popQueuePointer(&queueHead);
-            if(queueHead == NULL)
+            if(queueHead == NULL){
                 printf("berhasil dequee akhir\n");
-            insertQueueAddress(IDpop, &queueTail);
-            insertQueue(IDpop->IDcheck, &trackTail);
+                break;
+            }
 
             printf("%x Sudah dikunjungi\n", IDpop);
+
         }
 
         jump++;

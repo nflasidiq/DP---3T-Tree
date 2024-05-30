@@ -405,10 +405,14 @@ void logContact(User *currentSession) {
 
     while (fgets(buffer, sizeof(buffer), filePointer) != NULL) {
         sscanf(buffer, "%d %s", &id, username);
+        printf("Buffer: %s\n", buffer);
+        printf("String: %s\n", username);
+        printf("ID: %d\n", id);
         if (strcmp(username, contactUsername) == 0) {
             userFound = true;
             break;
         }
+
     }
     fclose(filePointer);
 
@@ -435,9 +439,10 @@ void logContact(User *currentSession) {
             sleep(2);
             return;
         }
+        printf("ID B ke A: %d\n", id);
 
         // Menambahkan ID kontak ke file pengguna yang sedang login
-        fprintf(contactFile, "%02d\n", id); // Menambahkan ID user B ke file user A
+        fprintf(contactFile, "%d\n", id); // Menambahkan ID user B ke file user A
         fclose(contactFile);
 
         // Membuka file user B untuk menambahkan ID user A
@@ -449,6 +454,8 @@ void logContact(User *currentSession) {
             return;
         }
 
+        printf("ID A ke B: %d\n", currentSession->id);
+
         // Menambahkan ID user A ke file user B
         fprintf(contactFile, "%02d\n", currentSession->id); // Menambahkan ID user A ke file user B
         fclose(contactFile);
@@ -459,6 +466,9 @@ void logContact(User *currentSession) {
         printf("Durasi untuk berkontak kurang dari 10 menit.\n");
         sleep(2);
     }
+
+    char terminator;
+    scanf("%c", &terminator);
 }
 
 void reportInfection(User *currentSession) {

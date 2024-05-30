@@ -18,7 +18,7 @@ void intializeQueue(int IDcheck, nodeLLAddress * head, nodeLLAddress * tail){
 
 }
 
-void intializeQueuePointer(nodeLLPointerAddress pointerCheck, nodeLLPointerAddress * head, nodeLLPointerAddress * tail){
+void intializeQueuePointer(NodeUser * pointerCheck, nodeLLPointerAddress * head, nodeLLPointerAddress * tail){
     nodeLLPointerAddress Q = (NodeQueuePointer*)malloc(sizeof(NodeQueuePointer));
     if(Q == NULL)
         exit(1);
@@ -41,7 +41,7 @@ void insertQueue(int IDcheck, nodeLLAddress * tail){
     (*tail) = (*tail)->next;
 }
 
-void insertQueueAddress(nodeLLPointerAddress pointerCheck, nodeLLAddress * tail){
+void insertQueueAddress(NodeUser * pointerCheck, nodeLLPointerAddress * tail){
     nodeLLPointerAddress Q = (NodeQueuePointer*)malloc(sizeof(NodeQueuePointer));
     if(Q == NULL)
         exit(1);
@@ -81,8 +81,8 @@ int popQueue(nodeLLAddress * head){
 
 }
 
-nodeLLAddress popQueuePointer(nodeLLPointerAddress * head){
-    nodeLLAddress tempValue = (*head)->trackedAddress;
+NodeUser * popQueuePointer(nodeLLPointerAddress * head){
+    NodeUser* tempValue = (*head)->trackedAddress;
     nodeLLPointerAddress P = *head;
     printf("Dequeue value = %d\n", (*head)->trackedAddress->ID);
 
@@ -107,7 +107,7 @@ nodeLLAddress popQueuePointer(nodeLLPointerAddress * head){
     free(P);
 
     if((*head) == NULL)
-        return -1;
+        return NULL;
 
     printf("dequee\n");
 
@@ -128,11 +128,11 @@ void printQueue(nodeLLAddress head){
 }
 
 void printAddressQueue(nodeLLPointerAddress head){
-    printf("Head first: %d\n", head->trackedAddress);
+    printf("Head first: %x\n", head->trackedAddress);
 
     printf("Isi dari address queue: ");
     while(head != NULL){
-        printf("%d ", head->trackedAddress);
+        printf("%x ", head->trackedAddress);
         head = head->next;
     }
 }
