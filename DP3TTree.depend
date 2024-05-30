@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # depslib dependency file v1.0
 1716201902 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\body.c
 	<stdio.h>
@@ -53,3 +54,110 @@
 
 1716265445 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\boolean.h
 
+=======
+# depslib dependency file v1.0
+1716201902 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\body.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"header.h"
+	"ridho.h"
+
+1715656434 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\header.h
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<time.h>
+	<stdbool.h>
+
+1715660297 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\ridho.h
+	<stdio.h>
+	<stdlib.h>
+
+1716646293 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\treeuser.c
+	<stdio.h>
+	<conio.h>
+	<stdlib.h>
+	<string.h>
+	"treeUser.h"
+	"queue.h"
+	"header.h"
+
+1716200858 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\main.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<time.h>
+	<stdbool.h>
+	"header.h"
+	"ridho.h"
+
+1716644232 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\treeuser.h
+	<stdio.h>
+	<stdlib.h>
+
+1716646030 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\queue.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	"treeUser.h"
+	"boolean.h"
+
+1716265968 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\queue.h
+
+1716265445 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\boolean.h
+
+1717003062 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\body.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"header.h"
+	"treeUser.h"
+
+1716985916 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\header.h
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<time.h>
+	<stdbool.h>
+
+1716985916 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\treeuser.h
+	<stdio.h>
+	<stdlib.h>
+
+1716985916 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\main.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<time.h>
+	<stdbool.h>
+	"header.h"
+	"treeUser.h"
+
+1717005611 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\queue.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	"treeUser.h"
+	"boolean.h"
+
+1716985916 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\boolean.h
+
+1717004970 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\treeuser.c
+	<stdio.h>
+	<conio.h>
+	<stdlib.h>
+	<string.h>
+	"treeUser.h"
+	"queue.h"
+	"header.h"
+
+1716985916 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\queue.h
+
+>>>>>>> naufal

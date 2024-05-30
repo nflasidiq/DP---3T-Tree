@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 admin admin
 rahma rahmi
+=======
+admin admin
+rahma rahmi
+>>>>>>> naufal
