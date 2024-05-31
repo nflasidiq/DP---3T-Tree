@@ -609,7 +609,7 @@ void infectionMenu(User *currentSession) {
         }
     }
     fclose(filePointer);
-
+    system("cls");
     // Validasi ID user terinfeksi
     if (userFound) {
         printf("User dengan ID %d dan username %s berhasil dipilih.\n", selectedID, username);

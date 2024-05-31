@@ -7,6 +7,8 @@
 #include <string.h>
 #include <time.h>
 #include <stdbool.h>
+#include <windows.h>
+#include <unistd.h>
 
 typedef struct dataUser *address;
 typedef struct dataUser {
