@@ -1,4 +1,7 @@
 87 ridhof
 51 yazid
+<<<<<<< HEAD
 34 timothy
 83 geraldin
+=======
+>>>>>>> 2f4d92360b06fc1f7ad4ad75201d495d7c501106
