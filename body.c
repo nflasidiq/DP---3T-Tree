@@ -734,6 +734,8 @@ void loginAllUser(Session *session) {
                                 printf("User %s kemungkinan sedang terinfeksi\n", username);
                             else if(levelInfection == 3)
                                 printf("User %s kemungkinan kecil terinfeksi\n", username);
+                            else if(levelInfection == MAX)
+                                printf("User %s tidak terkait pada user yang sudah terinfeksi\n Tidak ada tanda tanda User %s terinfeksi\n");
                             else
                                 printf("Tidak ada tanda tanda User %s terinfeksi\n", username);
 

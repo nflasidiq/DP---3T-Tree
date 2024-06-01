@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+#define MAX 999999
 //node untuk non binary tree
 typedef struct Node* nodeAddress;
 

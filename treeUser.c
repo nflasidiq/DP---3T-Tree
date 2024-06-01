@@ -6,6 +6,8 @@
 #include "queue.h"
 #include "header.h"
 
+
+
 //int serializeTree(){}
 NodeUser* intializeTree(int ID){
     nodeAddress R = (NodeUser*)malloc(sizeof(NodeUser));
@@ -287,7 +289,7 @@ int treeDiagnoseStatus(char* username_input, int IDuser, int IDdiagnosed){
 
     intializeQueuePointer(root, &queueHead, &queueTail);
     intializeQueue(IDuser, &trackHead, &trackTail);
-    int tracked = 0;
+    int tracked = 0, thereisUser = 0;
     int IDuserFromAllUser = IDuser;
     char usernameFile[100], passwordFile[100];
     int jump = 0, found = 0;
@@ -327,6 +329,7 @@ int treeDiagnoseStatus(char* username_input, int IDuser, int IDdiagnosed){
                         }
                         else
                             continue;
+
                     }
                     else{
                         levelInsert = insertLevelOrder(levelInsert, IDuser,queueHead, status, &queueTail);
@@ -334,6 +337,7 @@ int treeDiagnoseStatus(char* username_input, int IDuser, int IDdiagnosed){
                     }
 
                     if(IDuser == IDdiagnosed){
+                        thereisUser = 1;
                         found = 1;
                         break;
                     }
@@ -364,14 +368,14 @@ int treeDiagnoseStatus(char* username_input, int IDuser, int IDdiagnosed){
         jump++;
     }
 
-    return countTendency(root, IDdiagnosed);
+    return thereisUser == 1 ? countTendency(root, IDdiagnosed) : MAX;
 }
 
 int diagnoseInfectionStatus(int IDdiagnose){
     FILE *fileTerinfeksi = fopen("userTerinfeksi.txt", "r");
     int IDtraced;
     char username[100], password[100];
-    int statusDiagnose, pastStatusDiagnose = 9999999;
+    int statusDiagnose, pastStatusDiagnose = MAX;
     while(fscanf(fileTerinfeksi, "%d %s", &IDtraced, username) != EOF){
         if(IDtraced != IDdiagnose){
             int temp = treeDiagnoseStatus(username, IDtraced, IDdiagnose);
