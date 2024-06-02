@@ -403,7 +403,7 @@ void adminLihatTreeUser(){
     while(fscanf(userFile, "%d %s %s", &IDuser, usernameFile, passwordFile) != EOF){
         printf("%d %s %s\n", IDuser, usernameFile, passwordFile);
     }
-
+printf("\nKlik Enter untuk melanjutkan");
     scanf("%c", &terminator);
 
     printf("\nTree dari user mana yang ingin dilihat?\nID = ");
@@ -420,7 +420,7 @@ void adminLihatTreeUser(){
 
         }
     }
-	getchar();
+    printf("\nKlik Enter untuk kembali ke menu");
     scanf("%c", &terminator);
 
 }

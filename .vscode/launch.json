@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/IlhamFR/Desktop/gg/DP---3T-Tree",
-      "program": "c:/Users/IlhamFR/Desktop/gg/DP---3T-Tree/build/Debug/outDebug",
+      "cwd": "c:/Users/IlhamFR/Desktop/meme/DP---3T-Tree",
+      "program": "c:/Users/IlhamFR/Desktop/meme/DP---3T-Tree/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

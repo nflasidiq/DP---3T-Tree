@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <conio.h>
 #include "header.h"
 #include "treeUser.h"
 
@@ -168,8 +169,7 @@ void print_all_users() {
     }
 
     fclose(file);
-    getchar();
-    getchar();
+    printf("\nKlik Enter untuk kembali ke menu");getchar();
 }
 
 void print_tree(const char *filename) {
@@ -616,12 +616,22 @@ void infectionMenu(User *currentSession) {
         deserializeTree(username, selectedID);
         char pause;
         scanf("%c", &pause);
-        scanf("%c", &pause);
+        printf("\nKlik enter untuk lanjut ...");getch();
 
         sleep(2);
     } else {
         printf("ID user terinfeksi tidak ditemukan atau tidak dapat diakses.\n");
         sleep(2);
+    }
+}
+
+void print_menu(char **choices, int highlight, int n_choices) {
+    for (int i = 0; i < n_choices; ++i) {
+        if (i == highlight) {
+            printf("-> %s\n", choices[i]);
+        } else {
+            printf("   %s\n", choices[i]);
+        }
     }
 }
 
@@ -631,19 +641,20 @@ void loginAllUser(Session *session) {
 
     printf("Masukkan username: ");
     scanf("%s", input_username);
+    flush_buffer(); 
     printf("Masukkan password: ");
     scanf("%s", input_password);
+    flush_buffer(); 
 
-    // Cek apakah yang login adalah admin atau bukan
-        FILE *fileAdmin = fopen("admin.txt", "r");
+    FILE *fileAdmin = fopen("admin.txt", "r");
     if (fileAdmin != NULL) {
         char username[20], password[20];
         while (fscanf(fileAdmin, "%s %s", username, password) != EOF) {
             if (strcmp(username, input_username) == 0 && strcmp(password, input_password) == 0) {
                 // Admin login successful
                 system("cls");
-                printf("Selamat Datang, %s (Admin)!", input_username);
-				sleep(2);
+                printf("Selamat Datang, %s (Admin)!\n", input_username);
+                _sleep(2000);
 
                 // Menetapkan sesi admin
                 strcpy(session->user.username, input_username);
@@ -651,38 +662,46 @@ void loginAllUser(Session *session) {
                 session->type = ADMIN_USER;
 
                 // Menampilkan menu admin
-                int pilihan;
-                do {
-                	system("cls");
-                    printf("Menu:\n");
-                    printf("1. Tampilkan Semua User\n");
-                    printf("2. Tampilkan Tree\n");
-                    printf("3. Keluar\n");
-                    printf("Pilih menu: ");
-                    scanf("%d", &pilihan);
+                char *choices[] = {
+                    "1. Tampilkan Semua User",
+                    "2. Tampilkan Tree",
+                    "3. Keluar"
+                };
+                int n_choices = sizeof(choices) / sizeof(char *);
+                int highlight = 0;
 
-                    switch(pilihan) {
-                        case 1:
-                        	system("cls");
-                            printf("Daftar pengguna:\n");
-                            print_all_users();
-                            break;
-                        case 2:
-                        	system("cls");
-                            adminLihatTreeUser();
-                            break;
-                        case 3:
-                            printf("Anda memilih Keluar. Terima kasih!\n");
-                            sleep(2);
-                            break;
-                        default:
-                            printf("Pilihan tidak valid. Silakan pilih lagi.\n");
-                            sleep(2);
+                while (1) {
+                    system("cls");
+                    print_menu(choices, highlight, n_choices);
+
+                    int c = _getch();
+                    if (c == 224) { // Arrow keys
+                        switch (_getch()) {
+                            case 72: // Up
+                                if (highlight > 0) --highlight;
+                                break;
+                            case 80: // Down
+                                if (highlight < n_choices - 1) ++highlight;
+                                break;
+                        }
+                    } else if (c == 13) { // Enter key
+                        switch (highlight) {
+                            case 0:
+                                system("cls");
+                                printf("Daftar pengguna:\n");
+                                print_all_users();
+                                break;
+                            case 1:
+                                system("cls");
+                                adminLihatTreeUser();
+                                break;
+                            case 2:
+                                printf("Anda memilih Keluar. Terima kasih!\n");
+                                _sleep(2000);
+                                return;
+                        }
                     }
-                } while(pilihan != 3);
-
-                fclose(fileAdmin);
-                return;
+                }
             }
         }
         fclose(fileAdmin);
@@ -696,8 +715,9 @@ void loginAllUser(Session *session) {
             if (strcmp(username, input_username) == 0 && strcmp(password, input_password) == 0) {
                 // User login successful
                 system("cls");
-                printf("Selamat Datang, %s!", input_username);
-				sleep(2);
+                printf("Selamat Datang, %s!\n", input_username);
+                _sleep(2000);
+
                 // Menetapkan sesi user
                 strcpy(session->user.username, input_username);
                 strcpy(session->user.password, input_password);
@@ -705,74 +725,81 @@ void loginAllUser(Session *session) {
                 session->type = BASIC_USER;
 
                 // Menampilkan menu user
-                int pilihan;
-                do {
-                	system("cls");
-                    printf("Menu:\n");
-                    printf("1. Melakukan kontak\n");
-                    printf("2. Lihat Status\n");
-                    printf("3. Beranda Terinfeksi\n");
-                    printf("4. Laporkan Terinfeksi\n");
-                    printf("5. Keluar\n");
-                    printf("Pilih menu: ");
-                    scanf("%d", &pilihan);
+                char *choices[] = {
+                    "1. Melakukan kontak",
+                    "2. Lihat Status",
+                    "3. Beranda Terinfeksi",
+                    "4. Laporkan Terinfeksi",
+                    "5. Keluar"
+                };
+                int n_choices = sizeof(choices) / sizeof(char *);
+                int highlight = 0;
 
-                    switch(pilihan) {
-                        case 1:
+                while (1) {
+                    system("cls");
+                    print_menu(choices, highlight, n_choices);
+
+                    int c = _getch();
+                    if (c == 224) { // Arrow keys
+                        switch (_getch()) {
+                            case 72: // Up
+                                if (highlight > 0) --highlight;
+                                break;
+                            case 80: // Down
+                                if (highlight < n_choices - 1) ++highlight;
+                                break;
+                        }
+                    } else if (c == 13) { // Enter key
+                        switch (highlight) {
+                            case 0:
+                                system("cls");
+                                logContact(&session->user);
+                                break;
+                            case 1:
                             system("cls");
-                			logContact(&session->user);// Panggil fungsi untuk menampilkan informasi pengguna
-                            break;
-                        case 2:
-			                printf("Anda memilih Lihat Status.\n");
-			                int levelInfection = diagnoseInfectionStatus(id);
-			                printf("level infeksi %s: %d\n", username, levelInfection);
-			                if(levelInfection == 0)
-                                printf("User %s telah terinfeksi\n", username);
-			                else if(levelInfection == 1)
-                                printf("User %s kemungkinan besar terinfeksi\n", username);
-			                else if(levelInfection == 2)
-                                printf("User %s kemungkinan sedang terinfeksi\n", username);
-                            else if(levelInfection == 3)
-                                printf("User %s kemungkinan kecil terinfeksi\n", username);
-                            else if(levelInfection == MAX)
-                                printf("User %s tidak terkait pada user yang sudah terinfeksi\n Tidak ada tanda tanda User %s terinfeksi\n");
-                            else
-                                printf("Tidak ada tanda tanda User %s terinfeksi\n", username);
+                                printf("Anda memilih Lihat Status.\n");
+                                int levelInfection = diagnoseInfectionStatus(id);
+                                printf("Level infeksi %s: %d\n", username, levelInfection);
+                                if (levelInfection == 0)
+                                    printf("User %s telah terinfeksi\n", username);
+                                else if (levelInfection == 1)
+                                    printf("User %s kemungkinan besar terinfeksi\n", username);
+                                else if (levelInfection == 2)
+                                    printf("User %s kemungkinan sedang terinfeksi\n", username);
+                                else if (levelInfection == 3)
+                                    printf("User %s kemungkinan kecil terinfeksi\n", username);
+                                else
+                                    printf("Tidak ada tanda-tanda User %s terinfeksi\n", username);
 
-                            char pause;
-                            printf("Klik (enter) untuk lanjut\n");
-                            scanf("%c", &pause);
-                            scanf("%c", &pause);
-
-			                sleep(2);
-			                system("cls");
-                            break;
-                        case 3:
-			                system("cls");
-			                infectionMenu(&session->user);
-                            break;
-                        case 4:
-                            system("cls");
-			                reportInfection(&session->user);
-                            break;
-                        case 5:
-                            printf("Anda memilih Keluar. Terima kasih!\n");
-                            sleep(2);
-                            break;
-                        default:
-                            printf("Pilihan tidak valid. Silakan pilih lagi.\n");
-                            sleep(2);
+                                printf("Klik (enter) untuk lanjut\n");
+                                _getch();
+                                break;
+                            case 2:
+                                system("cls");
+                                infectionMenu(&session->user);
+                                break;
+                            case 3:
+                                system("cls");
+                                reportInfection(&session->user);
+                                break;
+                            case 4:
+                                printf("Anda memilih Keluar. Terima kasih!\n");
+                                _sleep(2000);
+                                return;
+                        }
                     }
-                } while(pilihan != 5);
-
-                fclose(fileUser);
-                return;
+                }
             }
         }
         fclose(fileUser);
     }
-    // Jika login tidak berhasil
+
     printf("Login gagal\n");
-    sleep(2);
+    _sleep(2000);
+}
+
+void flush_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
 }
 
