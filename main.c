@@ -90,12 +90,12 @@ int main() {
                                             registerAdmin();
                                             break;
                                         case 3:
-                                            break;
+                                            goto main_menu; // Break out of the registration menu loop
                                     }
-                                    if (registerChoice == 3) break;
                                     break;
                             }
                         }
+                        main_menu: // Label to return to main menu
                         break;
                     case 3:
                         exit_program = true;
