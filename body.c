@@ -626,7 +626,8 @@ void infectionMenu(User *currentSession) {
 }
 
 void print_menu(char **choices, int highlight, int n_choices) {
-    for (int i = 0; i < n_choices; ++i) {
+    int i;
+	for (i = 0; i < n_choices; ++i) {
         if (i == highlight) {
             printf("-> %s\n", choices[i]);
         } else {
@@ -654,7 +655,7 @@ void loginAllUser(Session *session) {
                 // Admin login successful
                 system("cls");
                 printf("Selamat Datang, %s (Admin)!\n", input_username);
-                _sleep(2000);
+                sleep(2);
 
                 // Menetapkan sesi admin
                 strcpy(session->user.username, input_username);
@@ -663,9 +664,9 @@ void loginAllUser(Session *session) {
 
                 // Menampilkan menu admin
                 char *choices[] = {
-                    "1. Tampilkan Semua User",
-                    "2. Tampilkan Tree",
-                    "3. Keluar"
+                    "Tampilkan Semua User",
+                    "Tampilkan Tree",
+                    "Keluar"
                 };
                 int n_choices = sizeof(choices) / sizeof(char *);
                 int highlight = 0;
@@ -678,10 +679,16 @@ void loginAllUser(Session *session) {
                     if (c == 224) { // Arrow keys
                         switch (_getch()) {
                             case 72: // Up
-                                if (highlight > 0) --highlight;
+                                if (highlight == 0)
+                                    highlight = n_choices - 1;
+                                else
+                                    --highlight;
                                 break;
                             case 80: // Down
-                                if (highlight < n_choices - 1) ++highlight;
+                                if (highlight == n_choices - 1)
+                                    highlight = 0;
+                                else
+                                    ++highlight;
                                 break;
                         }
                     } else if (c == 13) { // Enter key
@@ -697,7 +704,7 @@ void loginAllUser(Session *session) {
                                 break;
                             case 2:
                                 printf("Anda memilih Keluar. Terima kasih!\n");
-                                _sleep(2000);
+                                sleep(2);
                                 return;
                         }
                     }
@@ -716,7 +723,7 @@ void loginAllUser(Session *session) {
                 // User login successful
                 system("cls");
                 printf("Selamat Datang, %s!\n", input_username);
-                _sleep(2000);
+                sleep(2);
 
                 // Menetapkan sesi user
                 strcpy(session->user.username, input_username);
@@ -726,11 +733,11 @@ void loginAllUser(Session *session) {
 
                 // Menampilkan menu user
                 char *choices[] = {
-                    "1. Melakukan kontak",
-                    "2. Lihat Status",
-                    "3. Beranda Terinfeksi",
-                    "4. Laporkan Terinfeksi",
-                    "5. Keluar"
+                    "Melakukan kontak",
+                    "Lihat Status",
+                    "Beranda Terinfeksi",
+                    "Laporkan Terinfeksi",
+                    "Keluar"
                 };
                 int n_choices = sizeof(choices) / sizeof(char *);
                 int highlight = 0;
@@ -743,10 +750,16 @@ void loginAllUser(Session *session) {
                     if (c == 224) { // Arrow keys
                         switch (_getch()) {
                             case 72: // Up
-                                if (highlight > 0) --highlight;
+                                if (highlight == 0)
+                                    highlight = n_choices - 1;
+                                else
+                                    --highlight;
                                 break;
                             case 80: // Down
-                                if (highlight < n_choices - 1) ++highlight;
+                                if (highlight == n_choices - 1)
+                                    highlight = 0;
+                                else
+                                    ++highlight;
                                 break;
                         }
                     } else if (c == 13) { // Enter key
@@ -756,7 +769,7 @@ void loginAllUser(Session *session) {
                                 logContact(&session->user);
                                 break;
                             case 1:
-                            system("cls");
+                                system("cls");
                                 printf("Anda memilih Lihat Status.\n");
                                 int levelInfection = diagnoseInfectionStatus(id);
                                 printf("Level infeksi %s: %d\n", username, levelInfection);
@@ -784,7 +797,7 @@ void loginAllUser(Session *session) {
                                 break;
                             case 4:
                                 printf("Anda memilih Keluar. Terima kasih!\n");
-                                _sleep(2000);
+                                sleep(2);
                                 return;
                         }
                     }
@@ -795,7 +808,7 @@ void loginAllUser(Session *session) {
     }
 
     printf("Login gagal\n");
-    _sleep(2000);
+    sleep(2);
 }
 
 void flush_buffer() {

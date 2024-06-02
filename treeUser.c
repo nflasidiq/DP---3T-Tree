@@ -6,7 +6,16 @@
 #include "queue.h"
 #include "header.h"
 
-
+// Fungsi untuk mendapatkan warna berdasarkan indeks
+const char* getColor(int index) {
+    switch(index % 7) {
+        case 1: return ORANGE;
+        case 2: return YELLOW;
+        case 3: return LGREEN;
+        case 4: return CYAN;
+        default: return RESET;
+    }
+}
 
 //int serializeTree(){}
 NodeUser* intializeTree(int ID){
@@ -112,7 +121,7 @@ void printTreePreOrder(NodeUser *tree){
     int level = 0, traverseStatus = 1;
     bool lewat = false;
 
-    printf("%d\n", currentNode->ID);
+    printf(RED"%d\n"RESET, currentNode->ID);
 
     while(traverseStatus == 1){
         int i = 0;
@@ -124,7 +133,7 @@ void printTreePreOrder(NodeUser *tree){
                 printf("--|");
                 i++;
             }
-            printf("%d\n", currentNode->ID);
+            printf("%s%d%s\n", level >= 4 ? CYAN : getColor(i), currentNode->ID, RESET);
             lewat = false;
         }
         else if(currentNode->nextBrother  != NULL){
@@ -134,7 +143,7 @@ void printTreePreOrder(NodeUser *tree){
                 printf("--|");
                 i++;
             }
-            printf("%d\n", currentNode->ID);
+            printf("%s%d%s\n", level >= 4 ? CYAN : getColor(i), currentNode->ID, RESET);
             lewat = false;
         }
         else{
@@ -238,7 +247,7 @@ int countTendency(nodeAddress root, int IDdiagnosed){
     int level = 0, traverseStatus = 1, foundDiagnosed = 0;
     bool lewat = false;
 
-    printf("%d\n", currentNode->ID);
+    printf(RED"%d\n"RESET, currentNode->ID);
 
     while(traverseStatus == 1 &&  foundDiagnosed == 0){
         if(currentNode->ID == IDdiagnosed)
@@ -253,7 +262,7 @@ int countTendency(nodeAddress root, int IDdiagnosed){
                 printf("--|");
                 i++;
             }
-            printf("%d\n", currentNode->ID);
+            printf("%s%d%s\n", level >= 4 ? CYAN : getColor(i), currentNode->ID, RESET);
             lewat = false;
         }
         else if(currentNode->nextBrother  != NULL){
@@ -263,7 +272,7 @@ int countTendency(nodeAddress root, int IDdiagnosed){
                 printf("--|");
                 i++;
             }
-            printf("%d\n", currentNode->ID);
+            printf("%s%d%s\n", level >= 4 ? CYAN : getColor(i), currentNode->ID, RESET);
             lewat = false;
         }
         else{
@@ -274,7 +283,6 @@ int countTendency(nodeAddress root, int IDdiagnosed){
                 traverseStatus = 0;
         }
     }
-
     return level;
 }
 
@@ -403,8 +411,6 @@ void adminLihatTreeUser(){
     while(fscanf(userFile, "%d %s %s", &IDuser, usernameFile, passwordFile) != EOF){
         printf("%d %s %s\n", IDuser, usernameFile, passwordFile);
     }
-printf("\nKlik Enter untuk melanjutkan");
-    scanf("%c", &terminator);
 
     printf("\nTree dari user mana yang ingin dilihat?\nID = ");
     scanf("%d", &IDinput);

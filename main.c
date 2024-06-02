@@ -10,7 +10,8 @@ void print_menu_awal(int highlight) {
     int n_choices = sizeof(choices) / sizeof(char *);
     system("cls");
     printf("=== Menu ===\n");
-    for(int i = 0; i < n_choices; ++i) {    
+    int i;
+    for(i = 0; i < n_choices; ++i) {    
         if(highlight == i + 1) {
             printf("-> %s\n", choices[i]);
         } else {
@@ -24,7 +25,8 @@ void print_register_menu(int highlight) {
     int n_choices = sizeof(choices) / sizeof(char *);
     system("cls");
     printf("=== Register ===\n");
-    for(int i = 0; i < n_choices; ++i) {    
+    int i;
+	for(i = 0; i < n_choices; ++i) {    
         if(highlight == i + 1) {
             printf("-> %s\n", choices[i]);
         } else {
