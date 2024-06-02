@@ -7,56 +7,149 @@
 #include "treeUser.h"
 
 
-//void menu_lihat_status() {
-//    printf("Anda memilih Lihat Status.\n");
-//    sleep(2);
-//    system("cls");
-//    // Isi dengan logika lihat status
-//}
-//
-//
-//void menu_laporkan_terinfeksi() {
-//    printf("Anda memilih Laporkan Terinfeksi.\n");
-//    sleep(2);
-//    system("cls");
-//    // Isi dengan logika laporkan terinfeksi
-//}
+    // Status ASCII art from the file
+    const char *status_asciiArt[] = {
+        "                                                                                                    ",
+        "                                                                                                    ",
+        "                                 .XXXXXXXXXX           .XXXXXXXXXx                                  ",
+        "                               XXXXXXXXXxXXXXXx      +XXXXXXXXXXXXXXX.                               ",
+        "                             XXXXxxxxxxxxxxxXXXX+  xXXXXxxxxxxxxxxxXXXX                              ",
+        "                           ;XXXXxxxXXxxxxxxxXXXXXXXXXXXXxxXXxxXxxxXXXXXX;                           ",
+        "                          :XXxxxXXxXxxXXXXXXXXxxXxXXxxxxXXXXXxxxXxxxxXxXX+                          ",
+        "                          xXXXXXxxxxxXXXXXXXXXXxXXXXxxXXXXXXXXxxxXXXxxXxXx                          ",
+        "                         .XXxXXXXxxXxxXxX. XXXxxxXxxXxxXX: xXxxxxxXXxxXxXX.                         ",
+        "                          xXxxXxXxXXXXXXX  :XXXXxxXXXXXXX  .XXXXxxxxXXXxXX                          ",
+        "                          XXXXXXXXXX .XXX   XXXXXXXX .XXX   XXXXXXxxxxXxXX                          ",
+        "                          XXXXXXXXX: :XX.+xX+X XXXX  :XX xxX+X XXXXXXXXXXX                          ",
+        "   .   .                   :::: .;: . XX +X     :.. . XX +X     ;:.....+. .                     .   ",
+        "                            XXxx++xXX:+X xX. xXXxxXXX:xX +X. ;XXXx++xxXx                            ",
+        "                             XXXXXXXXx.:+XXX:xXXXXXXXX .+xXX:xXXXXXXXXX                             ",
+        "                              XXXXxXXX+ :XXXXXXXxxxXXX. .XXXXXXXxxXXX+                              ",
+        "                               .XXXXXX+ :XXXxxxxxxxXxX+ .XXxXxxxXXXX.                               ",
+        "                                 .XXXX; +XXXXxxxXXxXXX+ +XXxxXXXXX                                  ",
+        "                                   :XXXXXXxXxXXxxxxxXXXXXXxxXXXX                                     ",
+        "                                     .xXXXXXxxxxXXXxxxxXXxXXXx.                                      ",
+        "                                        XXXXxxxxxxxxxxxxXXXx                                         ",
+        "                                          XXXXxXXxXXXXXXXX:                                          ",
+        "                                           .XXXXXxxXXXX++                                            ",
+        "                                              +XXXXXX;                                               ",
+        "                                                :XX:                                                 ",
+        "                                                                                                    ",
+        "                                                                                                    ",
 
-//void start_session(Session *session) {
-//    // Assume that the user and password are stored in the 'users.txt' file
-//    // The file format is: <type> <id> <username> <password>\n
-//    // Where <type> is either 'U' for basic user or 'A' for admin
-//
-//    FILE *file = fopen("AllUser.txt", "r");
-//    if (!file) {
-//        printf("Error: Unable to open users.txt\n");
-//        exit(1);
-//    }
-//
-//    fscanf(file, "%d %s %s", &(session->type), session->user.username, session->user.password);
-//    fclose(file);
-//}
-//
-//void end_session(Session *session) {
-//    memset(session, 0, sizeof(Session));
-//}
+    };
 
-//UserType get_user_type(Session *session) {
-//    return session->type;
-//}
-//
-//int get_user_id(Session *session) {
-//    // Not used in this example, but you can implement it if needed
-//    return -1;
-//}
-//
-//const char *get_username(Session *session) {
-//    return session->user.username;
-//}
-//
-//const char *get_password(Session *session) {
-//    return session->user.password;
-//}
+
+const char *userTreeArt[] = {
+        "                                                            ",
+        "                                                            ",
+        "                                                            ",
+        "                           x;$$;x                           ",
+        "                         ;X&$;;$&X:                         ",
+        "                        +;&:    :&x.                        ",
+        "              .;$;.      ;&x    X&X      ::$;.              ",
+        "            $&&+:x&&     +&&$Xx$&$:     &&x:+&&&            ",
+        "           :&$;    &&      :&&&&$      &&    :X&+           ",
+        "           +&X:    &&      xx&&;.      &&    .X&;           ",
+        "            &&&$x&$&&   &&&&+XXX&&&&   &&&&+$&&&            ",
+        "              $Xx&$$&&$&Xx        $X&&&&$X&x$$              ",
+        "                   .&&&    &x$&;X    X&:                    ",
+        "          .+      :&&     x&&&&&&$     +&        .          ",
+        "       :&&&&&$    &&     &&&&&&&&&&     &&    ;&&&&&:       ",
+        "     +x&&    &&$ .&$     $$&&&&&&&x      ;  $&&    &&X+     ",
+        "     &&&&    &&&&&&x       ;&&&&x        &&&&&&    &&&&     ",
+        "     +x&&    &&&&:&$      :  +.  :      X& &$&&    &&$      ",
+        "       :&&&&&X    &&   &&&&&&&&&&&&&&   &&    X&&&&&:       ",
+        "          +.      .&&.&&&&&&&&&&&&&&&& &&       :;          ",
+        "                    &&&&&&&&&&&&&&&&&&&&.                   ",
+        "              $+x$X&&&&&&&&&&&&&&&&&&&&&xX$xx$.             ",
+        "            x&&&;&&&&  :$&&&&&&&&&&$ & &&&&;$&&$            ",
+        "           +&$:    &&      .:$$;       &&    .$&;           ",
+        "           ;&X;    &&      x&&&&x      &&    .X&+           ",
+        "            &&&;.X&&     ;;&&xx&&x      &&x::&&&            ",
+        "              :;X:.      ;&$    x&x       :$;.              ",
+        "                        +;&.    .&X.                        ",
+        "                         .$&$;;$&$+                         ",
+        "                           ;x$$++                           ",
+        "                                                            ",
+        "                                                            ",
+        "                                                            "
+    };
+
+
+    const char *daftarTerinfeksiArt[] = {
+        "                                                            ",
+        "                                                            ",
+        "                                                            ",
+        "                       $X          XX                       ",
+        "                    XXX              XX$                    ",
+        "                  XXX                  XX$                  ",
+        "                X$XX                    X$$X                ",
+        "               $XXX                      XXX$               ",
+        "              XXXXX                      XXXXX              ",
+        "              XXXXX                      XXXXX              ",
+        "             $XXXXX        $$XXXX        XXXXXX             ",
+        "             XXXXXX    XXXXXXXXXXXX$X    XXXXX$             ",
+        "             XXXXXXXXXXXXXXXXXXXXXXXXX$ XXXXXXX             ",
+        "           $XXXXXXXXXX$XX$        X$X$XXXXXXXXXXX           ",
+        "         XXXXXXXXXXXXX$$            $XXXXXXXXXXXXXX         ",
+        "       $XXXXXXXXXX$XXXXXXXXXXX$XXX$XXXXXXXXXXXXXXXXXX       ",
+        "      XXX$X$     XXXXXX$XXXXX  X$XXX$XXXXXX     XXXXX$      ",
+        "     XXXX       X$XXX   XX$      X$X   XXXXX       XXXX     ",
+        "    XXX         XXXX$     $$    $X     $XXXX         XXX    ",
+        "    XX           XXXX$     XXXXXX     X$XXX           XX    ",
+        "    X             $XXXX    XXXXXX    $$XX$             X    ",
+        "    X             XXXXXX    $XX$    XXXXX$             X    ",
+        "    X               $XXXX$XXXXXXXX$XXXXX               $    ",
+        "                     X$XXXXXXXXX$XXXX$$                     ",
+        "                        X$XXXXXX$XX$                        ",
+        "                          $XXXXXX$                          ",
+        "                         XXXXXXXXX$                         ",
+        "          $           X$$XXXXXXXXXXXXX           X          ",
+        "           XXXX$XXXX$XXXXXXX$XXX$XXXXXX$XXX$XX$XX           ",
+        "               XXXXXXXX$XX        XXXXXX$XXX$               "
+    };
+
+
+    const char* handshakeArt[] = {
+        "                                                                     ",
+        "                                                                     ",
+        "                                                                     ",
+        "                                @@@@@%                                ",
+        "         #*@@@@@#       #%##@@@@% %%#%@@@@@@#%%%%%%%%%%%%      +%@@@@%%",
+        "        *@%   %%@%%%%%%%%@%+    ##@@@#     #%@@@@@@@@@@@@#%%##*@%    @@",
+        "       *@%  :@@ %%%%%%%=     -###                       #%%%%%%##   @@",
+        "     :-*+  :@@             :-#*    :::::::::                  @@   ##-:",
+        "    %%#  #*%#            +@%    *###%%%%%%###                ####   @%",
+        "       %%# *@@             %%@%   @%%#       #@@@@                @@   @%",
+        "       %%# #@@             %*@@@@@*@            %@@@%             @@   @@",
+        "        %%# *@@                                      @@.           @@   @@",
+        "         %%# *@%                                        @@@%      %%     @@",
+        "         *@@@%:@@@@                                       %@@@@@%# @@@@@",
+        "                 @@@@ @@@@@*                    =@@        %%*         ",
+        "                    @@+  =*#@@#*+           **    *@@%+###*##*         ",
+        "                    @@=  #@* ++%#**+       *%#**+     #@@@%=           ",
+        "                    #*---=#=+@% *##*=:       +##*=-=---=*=             ",
+        "                      #%@#  +@%   =*%++   -+-   +@@%%%%#               ",
+        "                       %%*@@%@%  .@% %@#% #%%@@@%%%                    ",
+        "                        *%%@@*@@%##   @@@@@@@@@%                      ",
+        "                                 :@@@@@=                                ",
+        "                                  ***                                  "
+    };
+
+
+// Function to get the terminal width on Windows
+
+
+//    int additional_lines = sizeof(additional_art) / sizeof(additional_art[0]);
+const int status_lines = sizeof(status_asciiArt) / sizeof(status_asciiArt[0]);
+
+const int userTree_lines = sizeof(userTreeArt) / sizeof(userTreeArt[0]);
+
+const int daftarTerinfeksiArt_lines = sizeof(daftarTerinfeksiArt) / sizeof(daftarTerinfeksiArt[0]);
+
+const int handshake_lines = sizeof(handshakeArt) / sizeof(handshakeArt[0]);
+
 
 bool isIDExist(int id) {
     FILE *filePointer;
@@ -91,66 +184,6 @@ bool isIDExist(int id) {
     return found; // Mengembalikan hasil pencarian ID
 }
 
-// void selectID(const char *currentUsername) {
-//     int selectedID;
-//     printf("\nMasukkan ID yang ingin Anda pilih: ");
-//     scanf(" %d", &selectedID);
-
-//     // Memanggil fungsi untuk mencetak pesan berdasarkan keberadaan ID di file
-//     if (isIDExist(selectedID)) {
-//         printf("ID %d berhasil dipilih.\n", selectedID);
-//         sleep(2);
-//         inputDuration(selectedID); // Memanggil fungsi untuk meminta durasi setelah ID berhasil dipilih
-// 	} else {
-//         printf("ID %d tidak ditemukan.\n", selectedID);
-//         sleep(2);
-//     	system("cls");
-//     	showUserInformation(currentUsername);
-//     }
-// }
-
-// void inputDuration(int selectedID) {
-//     int duration;
-//     system("cls");
-//     printf("Masukkan durasi untuk ID %d (dalam menit): ", selectedID);
-//     scanf("%d", &duration);
-//     sleep(2); system("cls");
-// }
-
-// // Fungsi untuk menampilkan informasi pengguna dari file
-// void showUserInformation(const char *currentUsername) {
-//     FILE *filePointer;
-//     char filename[] = "AllUser.txt";
-//     char buffer[30]; // Buffer untuk menyimpan baris yang dibaca
-//     char username[20]; // Untuk menyimpan username dari setiap baris
-// 	int id;
-
-//     // Membuka file AllUser.txt
-//     filePointer = fopen(filename, "r");
-
-//     // Memeriksa apakah file berhasil dibuka
-//     if (filePointer == NULL) {
-//         printf("Gagal membuka file.\n");
-//         return; // Keluar dari fungsi jika file tidak dapat dibuka
-//     }
-
-//     // Menampilkan informasi pengguna dari file
-//     printf("Daftar Kontak:\n");
-//     while (fgets(buffer, sizeof(buffer), filePointer) != NULL) {
-//         // Menggunakan sscanf untuk membaca dua string pertama dari setiap baris
-//         sscanf(buffer, "%d %s", &id, username);
-//         // Jika username cocok dengan currentUsername, abaikan baris ini
-//         if (strcmp(username, currentUsername) == 0) {
-//             continue;
-//     	}
-//         printf("%d %s\n", id, username); // Menampilkan ID dan username
-//     }
-
-//     // Menutup file setelah selesai membaca
-//     fclose(filePointer);
-
-// 	selectID(currentUsername);
-// }
 
 
 void print_all_users() {
@@ -176,28 +209,6 @@ void print_tree(const char *filename) {
     system(filename);
 }
 
-// void login_admin(Session *session) {
-//     const char *admin_username = "admin";
-//     const char *admin_password = "password";
-
-//     char input_username[20], input_password[20];
-//     printf("Enter admin username: ");
-//     fgets(input_username, sizeof(input_username), stdin);
-//     input_username[strcspn(input_username, "\n")] = '\0';
-//     printf("Enter admin password: ");
-//     fgets(input_password, sizeof(input_password), stdin);
-//     input_password[strcspn(input_password, "\n")] = '\0';
-
-//     if (strcmp(admin_username, input_username) == 0 && strcmp(admin_password, input_password) == 0) {
-//         // Admin login successful
-//         printf("Welcome, admin!\n");
-//         print_all_users();
-//         print_tree("admin.txt");
-//     } else {
-//         // Admin login failed
-//         printf("Invalid admin credentials\n");
-//     }
-// }
 
 bool isFileExist(const char *filename) {
     FILE *file = fopen(filename, "r");
@@ -642,10 +653,10 @@ void loginAllUser(Session *session) {
 
     printf("Masukkan username: ");
     scanf("%s", input_username);
-    flush_buffer(); 
+    flush_buffer();
     printf("Masukkan password: ");
     scanf("%s", input_password);
-    flush_buffer(); 
+    flush_buffer();
 
     FILE *fileAdmin = fopen("admin.txt", "r");
     if (fileAdmin != NULL) {
@@ -700,6 +711,7 @@ void loginAllUser(Session *session) {
                                 break;
                             case 1:
                                 system("cls");
+                                printArt(userTreeArt, userTree_lines, 'b');
                                 adminLihatTreeUser();
                                 break;
                             case 2:
@@ -766,11 +778,13 @@ void loginAllUser(Session *session) {
                         switch (highlight) {
                             case 0:
                                 system("cls");
+                                printArt(handshakeArt, handshake_lines, 'r');
                                 logContact(&session->user);
                                 break;
                             case 1:
                                 system("cls");
                                 printf("Anda memilih Lihat Status.\n");
+                                printArt(status_asciiArt, status_lines, 'g');
                                 int levelInfection = diagnoseInfectionStatus(id);
                                 printf("Level infeksi %s: %d\n", username, levelInfection);
                                 if (levelInfection == 0)
@@ -789,6 +803,7 @@ void loginAllUser(Session *session) {
                                 break;
                             case 2:
                                 system("cls");
+                                printArt(daftarTerinfeksiArt, daftarTerinfeksiArt_lines, 'r');
                                 infectionMenu(&session->user);
                                 break;
                             case 3:

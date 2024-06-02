@@ -53,15 +53,16 @@
 
 1716265445 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3ttree\boolean.h
 
-1717118080 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\body.c
+1717340835 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\body.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<time.h>
+	<conio.h>
 	"header.h"
 	"treeUser.h"
 
-1717117639 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\header.h
+1717324932 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\header.h
 	<stdio.h>
 	<stdlib.h>
 	<unistd.h>
@@ -75,12 +76,10 @@
 	<stdio.h>
 	<stdlib.h>
 
-1716985916 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\main.c
+1717341262 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\main.c
 	<stdio.h>
 	<stdlib.h>
-	<unistd.h>
-	<string.h>
-	<time.h>
+	<conio.h>
 	<stdbool.h>
 	"header.h"
 	"treeUser.h"
@@ -94,7 +93,7 @@
 
 1716985916 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\boolean.h
 
-1717119685 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\treeuser.c
+1717324932 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\treeuser.c
 	<stdio.h>
 	<conio.h>
 	<stdlib.h>
@@ -104,4 +103,17 @@
 	"header.h"
 
 1716985916 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\queue.h
+
+1717339566 source:c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\asciiart.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	"asciiArt.h"
+
+1717340347 c:\users\muhammad ridho f\desktop\polban\tubes s2\dp3treeterbaru\dp---3t-tree\asciiart.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
 
