@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/DP3T.svg/1200px-DP3T.svg.png" alt="DP-3T Diagram" style="width:100%; max-width:600px;">
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DP-3T Simulation Program</title>
+    <img src="https://upload.wikimedia.org/wikipedia/en/7/76/DP-3T_Logo.jpg?20200424002042" alt="DP-3T Diagram" style="width:10%; max-width:600px;">
+
 </head>
 <body>
 
