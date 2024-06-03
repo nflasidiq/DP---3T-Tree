@@ -59,7 +59,5 @@
 <h2>Kesimpulan</h2>
 <p>Program simulasi ini bertujuan untuk meniru aplikasi DP-3T, memberikan cara sederhana namun efektif untuk memvisualisasikan dan melacak penyebaran infeksi. Dengan mengelola data kontak dan tingkat infeksi, user dapat memahami risiko mereka dan mengambil tindakan yang sesuai.</p>
 
-<p><em>Catatan: Asumsi dan aturan yang digunakan dalam simulasi ini hanya untuk tujuan demonstrasi dan tidak boleh digunakan untuk penilaian kesehatan atau pengambilan keputusan yang sebenarnya.</em></p>
-
 </body>
 </html>
