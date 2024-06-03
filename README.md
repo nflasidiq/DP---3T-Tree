@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/DP3T.svg/1200px-DP3T.svg.png" alt="DP-3T Diagram" style="width:100%; max-width:600px;">
 <html lang="id">
 <head>
     <meta charset="UTF-8">
